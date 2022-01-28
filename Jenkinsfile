@@ -62,7 +62,7 @@ pipeline{
             }
 
             steps {
-                sh "terraform apply -var=""traffic_distribution=blue"" -input=false tfplan"
+                sh "terraform apply -var='traffic_distribution=blue' -input=false tfplan"
                 slackSend color: 'good', message: 'Test Blue/Green Website successfully deployed'
             }
         }
@@ -74,7 +74,7 @@ pipeline{
 
         steps {
             sh 'terraform init -input=false'
-            sh "terraform destroy -var=""traffic_distribution=blue"" --auto-approve"
+            sh "terraform destroy -var='traffic_distribution=blue' --auto-approve"
             slackSend color: 'good', message: 'Test Blue/Green Website successfully destroyed'
         }
     }
