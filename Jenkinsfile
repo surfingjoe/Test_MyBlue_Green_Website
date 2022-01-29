@@ -1,3 +1,5 @@
+import hudson.tasks.test.AbstractTestResultAction
+
 pipeline{
     agent {label 'build_slave1'}
     tools {
@@ -64,7 +66,7 @@ pipeline{
 
             steps {
                 sh "terraform apply  -input=false tfplan"
-                slackSend color: 'good', message: 'Test Blue/Green Website successfully deployed'
+                slackSend color: 'good', message: 'Test Environment - Blue/Green Website successfully deployed'
             }
         }
 
@@ -76,9 +78,20 @@ pipeline{
         steps {
             sh 'terraform init -input=false'
             sh "terraform destroy  --auto-approve"
-            slackSend color: 'good', message: 'Test Blue/Green Website successfully destroyed'
+            slackSend color: 'good', message: 'Test Environment = ßBlue/Green Website successfully destroyed'
         }
     }
 
   }
+  post{
+    success {
+        slackSend color: 'good', message: 'Test environment - VPC - Success'
+        }
+    failure {
+        slackSend color: 'danger', message: "*Build failed*  - Job ${env.JOB_NAME} Build # ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
+        }
+    aborted {
+        slackSend color: "#FFC300", message: "*ABORTED:* Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} by ${env.USER}\n More info at: (<${env.BUILD_URL}|Open>)"
+        }
+    }
 }
