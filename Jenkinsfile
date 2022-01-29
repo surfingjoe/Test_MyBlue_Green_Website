@@ -84,9 +84,6 @@ pipeline{
 
   }
   post{
-    success {
-        slackSend color: 'good', message: 'Test environment - VPC - Success'
-        }
     failure {
         slackSend color: 'danger', message: "*Build failed*  - Job ${env.JOB_NAME} Build # ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
         }
