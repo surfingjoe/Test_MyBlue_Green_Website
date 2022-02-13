@@ -32,7 +32,7 @@ pipeline{
                 }
             }
             steps{
-                sh label: '', script: 'terraform init'
+                sh label: '', script: 'terraform init -reconfigure'
                 // sh 'terraform workspace select ${environment} || terraform workspace new ${environment}'
 
                 sh "terraform plan -input=false -out tfplan "
