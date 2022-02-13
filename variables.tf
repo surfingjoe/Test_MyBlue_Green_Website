@@ -60,5 +60,5 @@ locals {
 variable "traffic_distribution" {
   description = "Levels of traffic distribution"
   type        = string
-  default     = "green"
+  default     = "blue"
 }
