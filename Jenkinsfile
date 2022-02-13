@@ -32,6 +32,7 @@ pipeline{
                 }
             }
             steps{
+                cleanWs()
                 sh label: '', script: 'terraform init -reconfigure'
                 // sh 'terraform workspace select ${environment} || terraform workspace new ${environment}'
 
